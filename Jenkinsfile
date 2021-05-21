@@ -20,5 +20,12 @@ pipeline {
                 }
             }
         }
+        stage('Health Check') {
+            steps {
+               sh '''
+               docker run --name demoapp -d -p 8080:8080 "akshaygets/petclinic:$BUILD_NUMBER"
+               '''
+            }
+        }
     }
 }
