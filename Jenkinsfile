@@ -10,7 +10,7 @@ pipeline {
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "20.62.162.174:49153"
         NEXUS_REPOSITORY = "maven-nexus-repo"
-        NEXUS_CREDENTIAL_ID = "jenkins-user"
+        NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
     }
     stages {
         stage('Building our image') {
