@@ -20,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage('Health Check') {
+        stage('Deploy to Local') {
             steps {
                sh '''
                docker run --name demoapp -d -p 8080:8080 "akshaygets/petclinic:$BUILD_NUMBER"
