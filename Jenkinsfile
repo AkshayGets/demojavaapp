@@ -12,7 +12,7 @@ pipeline {
         stage('Building our image') {
             steps {
                 script {
-                    dockerImage = docker.build "petclinic:$BUILD_NUMBER"
+                    dockerImage = docker.build imageName
                 }
             }
         }
@@ -33,9 +33,7 @@ pipeline {
         }
         stage('Deploy to Local') {
             steps {
-               sh '''
-               docker run -d -p 8080:8080 --rm --name demoapp + registry + "petclinic:$BUILD_NUMBER"
-               '''
+               sh 'docker run -d -p 8080:8080 --rm --name demoapp ' + registry + imageName
             }
         }
     }
