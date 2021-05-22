@@ -12,7 +12,7 @@ pipeline {
         stage('Building our image') {
             steps {
                 script {
-                    dockerImage = docker.build imageName
+                    dockerImage = docker.build "petclinic:$BUILD_NUMBER"
                 }
             }
         }
@@ -25,11 +25,16 @@ pipeline {
             }
         }
         }
-
+        stage('stop previous containers') {
+            steps {
+                sh 'docker ps -f name=demoapp -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=demoapp -q | xargs -r docker container rm'
+            }
+        }
         stage('Deploy to Local') {
             steps {
                sh '''
-               docker run -d -p 8080:8080 --rm --name demoapp ' + registry + imageName
+               docker run -d -p 8080:8080 --rm --name demoapp ' + registry + "petclinic:$BUILD_NUMBER"
                '''
             }
         }
