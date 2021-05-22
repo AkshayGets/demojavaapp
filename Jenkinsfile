@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy to Local') {
             steps {
                sh '''
-               docker run -d -p 8080:8080 --rm --name demoapp ' + registry + "petclinic:$BUILD_NUMBER"
+               docker run -d -p 8080:8080 --rm --name demoapp + registry + "petclinic:$BUILD_NUMBER"
                '''
             }
         }
