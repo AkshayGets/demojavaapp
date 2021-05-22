@@ -5,7 +5,7 @@ pipeline {
     environment {
         imageName = "petclinic"
         registryCredentials = "nexus"
-        registry = "20.62.162.174:49153/repository/docker-private-repo/"
+        registry = "20.62.162.174:8083/"
         dockerImage = ''
     }
     stages {
