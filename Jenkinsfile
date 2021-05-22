@@ -1,7 +1,7 @@
 pipeline {
-    
-    agent any
-
+    agent {
+        label 'docker'
+    }
     environment {
         imageName = "petclinic"
         registryCredentials = "nexus"
