@@ -25,12 +25,6 @@ pipeline {
             }
         }
         }
-        stage('stop previous containers') {
-            steps {
-                sh 'docker ps -f name=demoapp -q | xargs --no-run-if-empty docker container stop'
-                sh 'docker container ls -a -fname=demoapp -q | xargs -r docker container rm'
-            }
-        }
 
         stage('Deploy to Local') {
             steps {
