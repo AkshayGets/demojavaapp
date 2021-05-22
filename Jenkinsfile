@@ -2,28 +2,40 @@ pipeline {
     agent {
         label 'docker'
     }
+    environment {
+        imageName = "petclinic"
+        registryCredentials = "jenkins-user-credentials"
+        registry = "20.62.162.174:49153/"
+        dockerImage = ''
+    }
     stages {
         stage('Building our image') {
             steps {
                 script {
-                    dockerImage = docker.build "akshaygets/petclinic:$BUILD_NUMBER"
+                    dockerImage = docker.build "petclinic:$BUILD_NUMBER"
                 }
             }
         }
-        stage('Deploy our image') {
+        stage('Uploading to Nexus') {
             steps {
                 script {
-                    // Assume the Docker Hub registry by passing an empty string as the first parameter
-                    docker.withRegistry('' , 'dockerhub') {
-                        dockerImage.push()
-                    }
+                    docker.withRegistry( 'http://'+registry, registryCredentials ) {
+                    dockerImage.push('')
                 }
             }
         }
+        }
+        stage('stop previous containers') {
+            steps {
+                sh 'docker ps -f name=demoapp -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=demoapp -q | xargs -r docker container rm'
+            }
+        }
+
         stage('Deploy to Local') {
             steps {
                sh '''
-               docker run --name demoapp -d -p 8080:8080 "akshaygets/petclinic:$BUILD_NUMBER"
+               docker run -d -p 8080:8080 --rm --name demoapp ' + registry + "petclinic:$BUILD_NUMBER"
                '''
             }
         }
