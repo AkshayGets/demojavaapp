@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
         imageName = "petclinic"
-        registryCredentials = "jenkins-user-credentials"
+        registryCredentials = "nexus"
         registry = "20.62.162.174:8085/"
         dockerImage = ''
     }
