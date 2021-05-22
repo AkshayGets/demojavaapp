@@ -5,14 +5,14 @@ pipeline {
     environment {
         imageName = "petclinic"
         registryCredentials = "nexus"
-        registry = "20.62.162.174:80/"
+        registry = "20.62.162.174:8085/"
         dockerImage = ''
     }
     stages {
         stage('Building our image') {
             steps {
                 script {
-                    dockerImage = docker.build "petclinic:$BUILD_NUMBER"
+                    dockerImage = docker.build imageName
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry( 'http://'+registry, registryCredentials ) {
-                    dockerImage.push('')
+                    dockerImage.push('latest')
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
         stage('Deploy to Local') {
             steps {
                sh '''
-               docker run -d -p 8080:8080 --rm --name demoapp ' + registry + "petclinic:$BUILD_NUMBER"
+               docker run -d -p 8080:8080 --rm --name demoapp ' + registry + imageName
                '''
             }
         }
