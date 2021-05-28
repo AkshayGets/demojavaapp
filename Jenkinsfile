@@ -2,7 +2,10 @@ pipeline {
     agent {
         label 'docker'
     }
-    
+    tools {
+        // Note: this should match with the tool name configured in your jenkins instance (JENKINS_URL/configureTools/)
+        maven "Maven 3.6.3"
+    }
     environment {
         imageName = "petclinic"
         registryCredentials = "nexus"
