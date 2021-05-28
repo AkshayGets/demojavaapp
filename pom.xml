@@ -297,6 +297,11 @@
   </licenses>
 
   <repositories>
+  <repositories>
+    <repository>
+      <id>maven-group</id>
+      <url>http://20.62.162.174:49153/repository/maven-group/</url>
+    </repository>
     <repository>
       <id>spring-snapshots</id>
       <name>Spring Snapshots</name>
