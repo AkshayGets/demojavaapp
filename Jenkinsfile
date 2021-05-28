@@ -17,10 +17,8 @@ pipeline {
     stages {
         stage('Deploy') {
           steps{
-              echo 'Deploying to Nexus'
-              //sh "mvn clean package"
-              withMaven(maven: 'mvn-3.6.3') {
-                  sh "mvn deploy -DskipTests"
+                script {
+                    sh "mvn package -DskipTests=true"
                 }
               
             }
