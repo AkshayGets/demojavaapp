@@ -3,11 +3,6 @@ pipeline {
         label 'docker'
     }
     
-    tools {
-        // Note: this should match with the tool name configured in your jenkins instance (JENKINS_URL/configureTools/)
-        maven "Maven 3.6.3"
-    }
-
     environment {
         imageName = "petclinic"
         registryCredentials = "nexus"
@@ -15,14 +10,6 @@ pipeline {
         dockerImage = ''
     }
     stages {
-        stage('Deploy') {
-          steps{
-                script {
-                    sh "mvn package -DskipTests=true"
-                }
-              
-            }
-        }
         stage('Building our image') {
             steps {
                 script {
