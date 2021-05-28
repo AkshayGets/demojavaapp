@@ -9,6 +9,16 @@ pipeline {
         dockerImage = ''
     }
     stages {
+        stage('Deploy') {
+          steps{
+              echo 'Deploying to Nexus'
+              //sh "mvn clean package"
+              withMaven(maven: 'mvn-3.6.3') {
+                  sh "mvn deploy -DskipTests"
+                }
+              
+            }
+        }
         stage('Building our image') {
             steps {
                 script {
