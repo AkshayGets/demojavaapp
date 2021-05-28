@@ -337,7 +337,16 @@
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
-
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://20.62.162.174:49153/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://20.62.162.174:49153/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
   <profiles>
     <profile>
       <id>m2e</id>
